@@ -7,7 +7,7 @@ const cron = require("node-cron");
 async function checkCclStatus() {
   const browser = await puppeteer.launch({
     args: ["--disable-dev-shm-usage", "--window-size=1600,1600"],
-    headless: false,
+    headless: argv.hideBrowser || false,
     userDataDir: "./user-data-dir",
     defaultViewport: null,
   });

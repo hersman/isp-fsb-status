@@ -23,6 +23,8 @@ _node index.js [arguments]_
 
 Arguments as follow:
 
+--hideBrowser **\*Only needed if you want to hide the browser in the background**
+
 --gmailUsername=your_gmail_account **\*REQUIRED**
 
 --gmailPassword=your_gmail_password **\*REQUIRED**
@@ -47,9 +49,13 @@ Arguments as follow:
 
 # Example
 
-**_### FOID currently in SUBMITTED status_**
+**_### FOID currently in SUBMITTED status with browser hidden_**
 
-node index.js --gmailUsername=example@gmail.com --gmailPassword=fakepassword --toEmail=example@gmail.com --ispUsername=exampleusername --ispPassword="fakeisppassword" --ispLastName=Smith --ispDOB=07/10/1970 --submitted
+node index.js --hideBrowser --gmailUsername=example@gmail.com --gmailPassword=fakepassword --toEmail=example@gmail.com --ispUsername=exampleusername --ispPassword="fakeisppassword" --ispLastName=Smith --ispDOB=07/10/1970 --submitted
+
+**_### FOID currently in QC_VERIFIED status_**
+
+node index.js --gmailUsername=example@gmail.com --gmailPassword=fakepassword --toEmail=example@gmail.com --ispUsername=exampleusername --ispPassword="fakeisppassword" --ispLastName=Smith --ispDOB=07/10/1970 --qc_verified
 
 **_### CCL currently in QC_VERIFIED status_**
 
