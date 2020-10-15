@@ -6,13 +6,13 @@ Application to check your ISP FSB FOID/CCL status and receive an email after sta
 
 # Requirements
 
-Node
+Node - https://nodejs.org/en/download/
 
 <br/>
 
 # How to Install
 
-npm i
+_npm i_
 
 <br/>
 
