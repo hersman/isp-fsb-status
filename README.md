@@ -6,7 +6,8 @@ Application to check your ISP FSB FOID/CCL status and receive an email after sta
 
 # Requirements
 
-Node - https://nodejs.org/en/download/
+- Gmail Account
+- Node - https://nodejs.org/en/download/
 
 <br/>
 
