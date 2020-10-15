@@ -4,7 +4,7 @@ const puppeteer = require("puppeteer");
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 
-async function checkCclStatus() {
+async function checkStatus() {
   const browser = await puppeteer.launch({
     args: ["--disable-dev-shm-usage", "--window-size=1600,1600"],
     headless: argv.hideBrowser || false,
@@ -75,5 +75,5 @@ async function checkCclStatus() {
 }
 
 cron.schedule("0 8-17 * * 1-5", () => {
-  checkCclStatus();
+  checkStatus();
 });
