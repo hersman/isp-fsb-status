@@ -4,22 +4,14 @@ const puppeteer = require("puppeteer");
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 
-async function checkStatus() {
-  const browser = await puppeteer.launch({
-    args: ["--disable-dev-shm-usage", "--window-size=1600,1600"],
-    headless: argv.hideBrowser || false,
-    userDataDir: "./user-data-dir",
-    defaultViewport: null,
-  });
+async function checkStatus(browser) {
   const page = (await browser.pages())[0];
   await page.goto("https://www.ispfsb.com/Public/Login.aspx");
-  await page.waitForSelector(
-    "body > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.label.ui-draggable.ui-resizable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button",
-    { visible: true, timeout: 5000 },
-  );
-  await page.click(
-    "body > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.label.ui-draggable.ui-resizable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button > span.ui-button-icon.ui-icon.ui-icon-closethick",
-  );
+  await page.waitForSelector("#divSystemMessage > div > div > div.modal-header > button", {
+    visible: true,
+    timeout: 5000,
+  });
+  await page.click("#divSystemMessage > div > div > div.modal-header > button");
   await page.type("#txtU", argv.ispUsername);
   await page.type("#txtP", argv.ispPassword);
   await page.type("#txtLastname", argv.ispLastName);
@@ -28,13 +20,11 @@ async function checkStatus() {
   await page.type("#txtDOB", argv.ispDOB);
   await page.click("#btnSignIn");
 
-  await page.waitForSelector(
-    "body > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.label.ui-draggable.ui-resizable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button",
-    { visible: true, timeout: 5000 },
-  );
-  await page.click(
-    "body > div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.label.ui-draggable.ui-resizable > div.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle > button",
-  );
+  await page.waitForSelector("#divDashboardMessage > div > div > div.modal-header > button", {
+    visible: true,
+    timeout: 5000,
+  });
+  await page.click("#divDashboardMessage > div > div > div.modal-header > button");
   const status = await page.evaluate(
     (argv) => {
       return document.querySelector(`${argv.ccl ? "#myCCLStatus" : "#myFOIDStatus"} > span`)
@@ -70,10 +60,19 @@ async function checkStatus() {
       subject: `${argv.ccl ? "CCL" : "FOID"} Status Change`,
     });
   } else console.log(`No ${argv.ccl ? "CCL" : "FOID"} status change`);
-  await page.click("#divHead > a.logout");
-  await browser.close();
+  await page.click("#lnkLogoff");
 }
 
-cron.schedule("0 8-17 * * 1-5", () => {
-  checkStatus();
-});
+async function main() {
+  const browser = await puppeteer.launch({
+    args: ["--disable-dev-shm-usage", "--window-size=1600,1600"],
+    headless: false,
+    userDataDir: "./user-data-dir",
+    defaultViewport: null,
+  });
+  cron.schedule("0 8-17 * * 1-5", () => {
+    checkStatus(browser);
+  });
+}
+
+main();

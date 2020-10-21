@@ -23,6 +23,7 @@ _node index.js [arguments]_
 
 Arguments as follow:
 
+**\*\*NO LONGER WORKS\*\***
 --hideBrowser **\*Only needed if you want to hide the browser in the background**
 
 --gmailUsername=your_gmail_account **\*REQUIRED**
