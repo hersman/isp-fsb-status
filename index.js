@@ -41,6 +41,9 @@ async function checkStatus(browser) {
   if (argv.qc_verified) {
     statusToCheck = "QC_VERIFIED";
   }
+  if (argv.underreview) {
+    statusToCheck = "UNDERREVIEW";
+  }
 
   if (status !== statusToCheck) {
     console.log(`${argv.ccl ? "CCL" : "FOID"} status change`.green);

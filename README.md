@@ -46,6 +46,8 @@ Arguments as follow:
 
 --qc_verified **\*Use if you're currently in QC_VERIFIED status**
 
+--underreview **\*Use if you're currently in UNDERREVIEW status**
+
 <br/>
 
 # Example
